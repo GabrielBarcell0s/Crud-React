@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Form, Field, Formik } from 'formik'
 import * as Yup from 'yup'
+import { IMaskInput } from 'react-imask';
 
 function Formulario() {
   const url = "https://632c7f045568d3cad887090c.mockapi.io/MeuProjetos/1/Pessoas";
@@ -11,7 +12,7 @@ function Formulario() {
       //Colocar Post com Fetch
     }
   }
-    ,[url, cadastrado])
+    , [url, cadastrado])
 
   const RegExp = {
     nome: /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/,
@@ -53,6 +54,7 @@ function Formulario() {
             <div>
               <label htmlFor="PrimeiroNome">Nome:</label>
               <Field id="PrimeiroNome" name="PrimeiroNome" type="text" placeholder="João"></Field>
+
             </div>
 
             {errors.PrimeiroNome}
@@ -73,7 +75,7 @@ function Formulario() {
 
             <div>
               <label htmlFor="Telefone">Telefone:</label>
-              <Field id="Telefone" name="Telefone" type="tel" placeholder="+99(99)9 9999-9999" />
+              <Field as={IMaskInput} id="Telefone" mask="+00 (00) 00000-0000" name="Telefone" type="tel" placeholder="+99(99)9 9999-9999" />
             </div>
 
             {errors.Telefone}
@@ -83,16 +85,16 @@ function Formulario() {
               <Field id="DataNas" name="DataNasc" type="date" />
             </div>
 
-              {errors.DataNasc}
+            {errors.DataNasc}
 
             <div>
               <label htmlFor="CPF">CPF:</label>
-              <Field id="CPF" name="CPF" type="string" placeholder="000.000.000-00"/>
+              <Field as={IMaskInput} mask="000.000.000-00" id="CPF" name="CPF" type="string" placeholder="000.000.000-00" />
             </div>
 
-              {errors.CPF}
+            {errors.CPF}
 
-              <br />
+            <br />
 
             <button disabled={!isValid} type="submit">Submit</button>
 

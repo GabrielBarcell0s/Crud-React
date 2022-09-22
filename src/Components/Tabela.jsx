@@ -5,8 +5,6 @@ function Tabela() {
   const [Carregando, setCarregado] = useState(true);
   const [pessoas, setPessoas] = useState(new Date());
 
-  console.log(pessoas);
-
   useEffect(() => {
     fetch(url)
       .then((res) => res.json())

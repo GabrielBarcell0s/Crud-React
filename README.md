@@ -14,5 +14,8 @@
 ### Bibliotecas
 
 - REACT
-- EMOTION´
+- EMOTION
+- Formik
+- Yup
+- react-imask
 
