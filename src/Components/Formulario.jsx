@@ -7,7 +7,7 @@ function Formulario() {
   const [cadastrado, setCadastrado] = useState({});
 
   useEffect(() => {
-    if (Object.key(cadastrado).lenght > 0) {
+    if (Object.keys(cadastrado).lenght > 0) {
       //Colocar Post com Fetch
     }
   }
