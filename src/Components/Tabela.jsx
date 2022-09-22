@@ -22,21 +22,21 @@ function Tabela() {
 
   return (
     <>
-      {pessoas.map((pessoa,i) =>
-        <table key={`Pessoa${i}`}>
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Sobrenome</th>
-              <th>Email</th>
-              <th>Telefone</th>
-              <th>Data de Nascimento</th>
-              <th>CPF</th>
-              <th>Editar</th>
-              <th>Modificar</th>
-            </tr>
-          </thead>
-          <tbody>
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Sobrenome</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Data de Nascimento</th>
+            <th>CPF</th>
+            <th>Editar</th>
+            <th>Modificar</th>
+          </tr>
+        </thead>
+        {pessoas.map((pessoa, i) =>
+          <tbody key={`Pessoa${i}`}>
             <tr>
               <td>{pessoa.Nome}</td>
               <td>{pessoa.Sobrenome}</td>
@@ -48,8 +48,8 @@ function Tabela() {
               <td>🗑</td>
             </tr>
           </tbody>
-        </table>
-      )}
+        )}
+      </table>
 
     </>
   )
