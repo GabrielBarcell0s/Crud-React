@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Formulario from './page/Formulario';
+import Crud from './page/Crud';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Formulario />
+    <Crud/>
   </React.StrictMode>
 );
