@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
 function Tabela() {
-  const url = "https://632c7f045568d3cad887090c.mockapi.io/MeuProjetos/1/Pessoas";
+  const url = "https://632c7f045568d3cad887090c.mockapi.io/Pessoas";
   const [Carregando, setCarregado] = useState(true);
-  const [pessoas, setPessoas] = useState(new Date());
+  const [pessoas, setPessoas] = useState();
 
   useEffect(() => {
     fetch(url)
@@ -12,8 +12,7 @@ function Tabela() {
         setPessoas(res)
         setCarregado(false)
       })
-  }
-    , [url])
+  }, [url])
 
 
   if (Carregando) return <>Espere</>
@@ -30,13 +29,13 @@ function Tabela() {
             <th>Data de Nascimento</th>
             <th>CPF</th>
             <th>Editar</th>
-            <th>Modificar</th>
+            <th>Excluir</th>
           </tr>
         </thead>
         {pessoas.map((pessoa, i) =>
           <tbody key={`Pessoa${i}`}>
             <tr>
-              <td>{pessoa.Nome}</td>
+              <td>{pessoa.PrimeiroNome}</td>
               <td>{pessoa.Sobrenome}</td>
               <td>{pessoa.Email}</td>
               <td>{pessoa.Telefone}</td>

@@ -1,38 +1,35 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Form, Field, Formik } from 'formik'
 import * as Yup from 'yup'
 import { IMaskInput } from 'react-imask';
+import { Tooltip } from '@mui/material'
 
 function Formulario() {
-  const url = "https://632c7f045568d3cad887090c.mockapi.io/MeuProjetos/1/Pessoas";
+  const url = "https://632c7f045568d3cad887090c.mockapi.io/Pessoas";
   const [cadastrado, setCadastrado] = useState({});
-
-  useEffect(() => {
-    if (Object.keys(cadastrado).lenght > 0) {
-      //Colocar Post com Fetch
-    }
-  }
-    , [url, cadastrado])
+  const config = { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(cadastrado) };
 
   const RegExp = {
     nome: /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/,
-    telefone: /^\+?\d{2}?\s*\(\d{2}\)?\s*\d{4,5}\-?\d{4}$/g,
-    cpf: /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/
   }
+
 
   const schema = Yup.object().shape({
     PrimeiroNome: Yup.string().matches(RegExp.nome).required(),
     Sobrenome: Yup.string().matches(RegExp.mome).required(),
     Email: Yup.string().email().required(),
-    Telefone: Yup.string().trim().matches(RegExp.telefone).required(),
+    Telefone: Yup.string().trim().required(),
     DataNasc: Yup.date().required(),
-    CPF: Yup.string().matches(RegExp.cpf).required()
+    CPF: Yup.string().required()
   })
 
-  const onSubmit = (values, actions) => {
-
+  const onSubmit = (values) => {
+    const pessoa = { ...values }
+    setCadastrado(pessoa)
+    fetch(url, config)
+      .then((res) => res.json())
+      .then((res) => console.log(res))
   }
-
 
   return (
     <>
@@ -53,46 +50,51 @@ function Formulario() {
           <Form>
             <div>
               <label htmlFor="PrimeiroNome">Nome:</label>
-              <Field id="PrimeiroNome" name="PrimeiroNome" type="text" placeholder="João"></Field>
+              <Tooltip title={errors.PrimeiroNome ? "Nome Inválido" : "✔"} placement='right-end' arrow >
+                <><Field id="PrimeiroNome" name="PrimeiroNome" type="text" placeholder="João"></Field></>
+              </Tooltip>
 
             </div>
-
-            {errors.PrimeiroNome}
 
             <div>
               <label htmlFor="Sobrenome">Sobrenome:</label>
-              <Field id="Sobrenome" name="Sobrenome" type="text" placeholder="Santos"></Field>
-            </div>
+              <Tooltip title={errors.Sobrenome ? "Sobrenome Inválido" : "✔"} placement='right-end' arrow >
+                <><Field id="Sobrenome" name="Sobrenome" type="text" placeholder="Santos"></Field></>
+              </Tooltip>
 
-            {errors.Sobrenome}
+            </div>
 
             <div>
               <label htmlFor="Email">Email:</label>
-              <Field id="Email" name="Email" type="email" placeholder="joaoExemple@exemple.com" />
-            </div>
+              <Tooltip title={errors.Email ? "Email Inválido" : "✔"} placement='right-end' arrow >
+                <><Field id="Email" name="Email" type="email" placeholder="joaoExemple@exemple.com" /></>
+              </Tooltip>
 
-            {errors.Email}
+            </div>
 
             <div>
               <label htmlFor="Telefone">Telefone:</label>
-              <Field as={IMaskInput} id="Telefone" mask="+00 (00) 00000-0000" name="Telefone" type="tel" placeholder="+99(99)9 9999-9999" />
-            </div>
+              <Tooltip title={errors.Telefone ? "Telefone Inválido" : "✔"} placement='right-end' arrow >
+                <><Field as={IMaskInput} id="Telefone" mask="+00 (00) 00000-0000" name="Telefone" type="tel" placeholder="+99(99)9 9999-9999" /></>
+              </Tooltip>
 
-            {errors.Telefone}
+            </div>
 
             <div>
               <label htmlFor="DataNasc">Data de Nascimento:</label>
-              <Field id="DataNas" name="DataNasc" type="date" />
-            </div>
+              <Tooltip title={errors.DataNasc ? "Data de Nascimento Inválida" : "✔"} placement='right-end' arrow >
+                <><Field id="DataNas" name="DataNasc" type="date" /></>
+              </Tooltip>
 
-            {errors.DataNasc}
+            </div>
 
             <div>
               <label htmlFor="CPF">CPF:</label>
-              <Field as={IMaskInput} mask="000.000.000-00" id="CPF" name="CPF" type="string" placeholder="000.000.000-00" />
-            </div>
+              <Tooltip title={errors.CPF ? "CPF Inválido" : "✔"} placement='right-end' arrow >
+                <><Field as={IMaskInput} mask="000.000.000-00" id="CPF" name="CPF" type="string" placeholder="000.000.000-00" /></>
+              </Tooltip>
 
-            {errors.CPF}
+            </div>
 
             <br />
 
