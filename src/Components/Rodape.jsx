@@ -3,13 +3,16 @@ import styled from '@emotion/styled'
 
 function Rodape() {
   const Footer = styled.footer`
-    margin-left:10vw;
-    margin-right:10vw;
+  position: relative;
+    left:5vw;
+    box-sizing:border-box;
     display:flex;
-    width:80vw;
-    text-align:center;
-    margin-top:20px;
     justify-content:space-between;
+    margin:20px 0 0 ;
+    padding: 10px 30px 10px;
+    border-radius:25px 25px 0 0 ;
+    border: 1px solid black;
+    width: 90vw;
   `
 
   const Links = styled.a`

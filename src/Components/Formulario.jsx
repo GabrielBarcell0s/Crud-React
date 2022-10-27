@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
-import { Form, Field, Formik } from 'formik'
-import * as Yup from 'yup'
+import React, { useState } from 'react';
+import { Form, Field, Formik } from 'formik';
+import * as Yup from 'yup';
 import { IMaskInput } from 'react-imask';
+import MyContext from './MyContext';
+import Carregamento from './Carregamento'
 
 function Formulario(props) {
-  const url = "https://632c7f045568d3cad887090c.mockapi.io/Pessoas";
-  const [cadastrado, setCadastrado] = useState({});
-  const config = { method: props.metodo, headers: { "Content-Type": "application/json" }, body: JSON.stringify(cadastrado) };
+  const { url, atualizar, setAtualizar} = React.useContext(MyContext);
+  const [edit, setEdit] = useState({});
+  const [looding, setLooding] = useState(true);
 
   const RegExp = {
     nome: /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/,
@@ -14,52 +16,68 @@ function Formulario(props) {
 
   const schema = Yup.object().shape({
     PrimeiroNome: Yup.string().matches(RegExp.nome).required(),
-    Sobrenome: Yup.string().matches(RegExp.mome).required(),
+    Sobrenome: Yup.string().matches(RegExp.nome).required(),
     Email: Yup.string().email().required(),
     Telefone: Yup.string().trim().required(),
     DataNasc: Yup.date().required(),
     CPF: Yup.string().required()
   })
 
-  const onSubmit = (values) => {
-    if(props.enviar){
-      const pessoa = { ...values }
-      setCadastrado(pessoa)
-      fetch(url, config)
-      .then((res) => res.json())
-      .then(() => console.log("Cadastrado"))
+  React.useEffect(() => {
+    if (!props.enviar) {
+      fetch(url + `/${props.identificador}`)
+        .then((res) => res.json())
+        .then((res) => {
+          setEdit(res)
+          setLooding(false)
+        }
+        )
     }
-  else{
+    else {
+      setLooding(false)
+    }
+  }, [props.enviar, props.identificador, url])
+
+
+  const onSubmit = (values) => {
     const pessoa = { ...values }
-      setCadastrado(pessoa)
-      fetch(url+`/${props.identificador}`, config)
-      .then((res) => res.json())
-      .then(() => console.log("Atualizado"))
+
+    const config = { method: props.metodo, headers: { "Content-Type": "application/json" }, body: JSON.stringify(pessoa) };
+
+    if (props.enviar) {
+      fetch(url, config)
+        .then((res) => res.json())
+        .then(() => setAtualizar(atualizar + 1))
+    }
+    else {
+      fetch(url + `/${props.identificador}`, config)
+        .then((res) => res.json())
+        .then(() => setAtualizar(atualizar + 1))
+    }
   }
-  }
+
+  if (looding) return <Carregamento tipo="editar" />
 
   return (
     <>
       <Formik
         validationSchema={schema}
         onSubmit={onSubmit}
-
         initialValues={{
-          PrimeiroNome: "",
-          Sobrenome: "",
-          Email: "",
-          Telefone: "",
-          DataNasc: "",
-          CPF: ""
+          PrimeiroNome: `${props.enviar ? "" : edit.PrimeiroNome}`,
+          Sobrenome: `${props.enviar ? "" : edit.Sobrenome}`,
+          Email: `${props.enviar ? "" : edit.Email}`,
+          Telefone: `${props.enviar ? "" : edit.Telefone}`,
+          DataNasc: `${props.enviar ? "" : edit.DataNasc}`,
+          CPF: `${props.enviar ? "" : edit.CPF}`
         }}
       >
-        {({ errors, isValid }) => (
+        {({ isValid }) => (
           <Form>
             <div>
               <label htmlFor="PrimeiroNome">Nome:</label>
 
-              <Field id="PrimeiroNome" name="PrimeiroNome" type="text" placeholder="João"></Field>
-
+              <Field id="PrimeiroNome" name="PrimeiroNome" type="text" placeholder="João" autoFocus></Field>
 
             </div>
 
@@ -98,7 +116,6 @@ function Formulario(props) {
               <label htmlFor="CPF">CPF:</label>
 
               <Field as={IMaskInput} mask="000.000.000-00" id="CPF" name="CPF" type="string" placeholder="000.000.000-00" />
-
 
             </div>
 
