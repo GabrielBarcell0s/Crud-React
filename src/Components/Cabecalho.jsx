@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import styled from '@emotion/styled'
 import MyContext from './MyContext';
+import Botao from './Botao';
 import DialogCriar from './DialogCriar';
 
 function Cabecalho() {
@@ -8,17 +9,40 @@ function Cabecalho() {
   const [search, setSearch] = React.useState("");
 
   const Header = styled.header`
-    position: relative;
-    left:5vw;
     box-sizing:border-box;
     display:flex;
     justify-content:space-between;
     margin:0 0 20px;
-    padding: 10px 30px 10px;
-    border-radius:0 0 25px 25px;
-    border: 1px solid black;
-    width: 90vw;
+    padding: 10px 30px 11px;
+    border: 1px solid rgba(0,0,0,1);
+    width: 100vw;
+    background-color: rgba(0,0,0,1);
   `
+
+  const LogoImagem = styled.img`
+    position: fixed;
+
+    top: 0px;
+    width: 50px;
+    height: 50px;
+  `
+  const LogoTexto = styled.span`
+    position: fixed;
+    font-size: 25px;
+    left:7vw;
+    top: 5px;
+    color: white;
+  `
+
+  const Pesquisa = styled.input`
+    width: 160px;
+    height: 23px;
+    border: 1px solid white;
+    :focus{
+      border: 1px solid white;
+    }
+  `
+
 
   const procurar = (value) => {
     if (isNaN(value[0])) {
@@ -35,10 +59,12 @@ function Cabecalho() {
 
   return (
     <Header>
-      <div>Logo</div>
+      <div><LogoImagem src="https://i.postimg.cc/281wXHFK/dee704163b1bd7c8c4c95130120ad855d8e75ea3r1-736-736v2-uhq-removebg-preview.png" alt="FotoLogo" />
+      <LogoTexto id='LogoTexto'>G Barc</LogoTexto>
+      </div>
       <div>
-        <input value={search} onChange={(evento) => setSearch(evento.target.value)} type="search" name="pesquisar" id="pesquisar" placeholder='Nome ou CPF' autoFocus />
-        <button onClick={() => procurar(search)} >Pesquisar</button>
+        <Pesquisa value={search} onChange={(evento) => setSearch(evento.target.value)} type="search" name="pesquisar" id="pesquisar" placeholder='Nome ou CPF' autoFocus />
+        <Botao onClick={() => procurar(search)} >Pesquisar</Botao>
       </div>
 
       <div>

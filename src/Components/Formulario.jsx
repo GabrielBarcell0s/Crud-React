@@ -4,6 +4,9 @@ import * as Yup from 'yup';
 import { IMaskInput } from 'react-imask';
 import MyContext from './MyContext';
 import Carregamento from './Carregamento'
+import Botao from './Botao';
+import Label from './Label';
+import InputCss from './InputCss';
 
 function Formulario(props) {
   const { url, atualizar, setAtualizar} = React.useContext(MyContext);
@@ -74,54 +77,55 @@ function Formulario(props) {
       >
         {({ isValid }) => (
           <Form>
-            <div>
-              <label htmlFor="PrimeiroNome">Nome:</label>
-
+            <InputCss>
+              <Label htmlFor="PrimeiroNome">Nome:</Label>
+      
               <Field id="PrimeiroNome" name="PrimeiroNome" type="text" placeholder="João" autoFocus></Field>
 
-            </div>
+            </InputCss>
 
-            <div>
-              <label htmlFor="Sobrenome">Sobrenome:</label>
+            <InputCss>
+              <Label htmlFor="Sobrenome">Sobrenome:</Label>
 
               <Field id="Sobrenome" name="Sobrenome" type="text" placeholder="Santos"></Field>
 
 
-            </div>
+            </InputCss>
 
-            <div>
-              <label htmlFor="Email">Email:</label>
+            <InputCss>
+              <Label htmlFor="Email">Email:</Label>
 
               <Field id="Email" name="Email" type="email" placeholder="joaoExemple@exemple.com" />
 
 
-            </div>
+            </InputCss>
 
-            <div>
-              <label htmlFor="Telefone">Telefone:</label>
+            <InputCss>
+              <Label htmlFor="Telefone">Telefone:</Label>
 
               <Field as={IMaskInput} id="Telefone" mask="+00 (00) 00000-0000" name="Telefone" type="tel" placeholder="+99(99)9 9999-9999" />
 
-            </div>
+            </InputCss>
+            
+            <InputCss>
+              <Label htmlFor="CPF">CPF:</Label>
 
-            <div>
-              <label htmlFor="DataNasc">Data de Nascimento:</label>
+              <Field as={IMaskInput} mask="000.000.000-00" id="CPF" name="CPF" type="string" placeholder="000.000.000-00" />
+
+            </InputCss>
+            
+            <InputCss>
+              <Label htmlFor="DataNasc">Data de Nascimento:</Label>
 
               <Field id="DataNas" name="DataNasc" type="date" />
 
 
-            </div>
+            </InputCss>
 
-            <div>
-              <label htmlFor="CPF">CPF:</label>
-
-              <Field as={IMaskInput} mask="000.000.000-00" id="CPF" name="CPF" type="string" placeholder="000.000.000-00" />
-
-            </div>
 
             <br />
 
-            {props.enviar ? <button disabled={!isValid} type="submit">Cadastrar</button> : <button disabled={!isValid} type="submit">Editar</button>}
+            {props.enviar ? <Botao disabled={!isValid} type="submit">Cadastrar</Botao> : <Botao disabled={!isValid} type="submit">Editar</Botao>}
 
           </Form>
         )}

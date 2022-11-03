@@ -25,18 +25,20 @@ function Crud() {
 
   const GlobalStyles = css`
   @import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
-
-  body{
-    margin:0
-  }
+  @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
 
   td,th{
     font-family: 'Inconsolata', monospace;
   }
 
-  table{
-    border: 1px solid rgba(0,0,0,.4);
+  body{
+    margin:0;
   }
+
+  #LogoTexto{
+    font-family: 'Black Ops One', cursive;
+  }
+
   `
   return (
     <main>

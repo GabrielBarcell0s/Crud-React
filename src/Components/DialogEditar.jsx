@@ -1,13 +1,15 @@
 import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material'
 import { useState } from 'react'
+import Botao from './Botao';
 import Formulario from './Formulario';
+import IconeBotao from './IconeBotao';
 
 function DialogEditar(props) {
   const [abrirEditar, setAbrirEditar] = useState(false);
 
   return (
     <>
-      <button onClick={() => setAbrirEditar(true)}>{props.children}</button>
+      <IconeBotao onClick={() => setAbrirEditar(true)}>{props.children}</IconeBotao>
       <Dialog
         open={abrirEditar}
         onClose={() => setAbrirEditar(false)}
@@ -20,7 +22,7 @@ function DialogEditar(props) {
           </DialogContent>
         </DialogContent>
         <DialogActions>
-          <button onClick={() => setAbrirEditar(false)} >Fechar</button>
+          <Botao onClick={() => setAbrirEditar(false)}>Fechar</Botao>
         </DialogActions>
       </Dialog>
     </>
